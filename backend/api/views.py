@@ -9,7 +9,7 @@ from .models import Note
 class NoteListCreate(generics.ListCreateAPIView):
     serializer_class = NoteSerializer
     permission_classes = [AllowAny]
-    print("fafa")
+
     def get_queryset(self):
         user = self.request.user
         return Note.objects.filter(author=user)
