@@ -9,7 +9,7 @@ interface ProtectedRouteProps {
 }
 
 function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
 
   useEffect(() => {
     auth().catch(() => setIsAuthorized(false));
@@ -47,12 +47,14 @@ function ProtectedRoute({ children }: ProtectedRouteProps) {
       await refreshToken();
     } else {
       setIsAuthorized(true);
+      console.log(isAuthorized)
     }
   };
 
   if (isAuthorized === null) {
     return <div>Loading...</div>;
   }
+  console.log(isAuthorized)
   return isAuthorized ? children : <Navigate to="/login" />;
 }
 
