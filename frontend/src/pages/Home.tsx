@@ -1,14 +1,8 @@
 import "../styles/Home.css";
+import { NoteObjectProps } from "../types/NoteTypes";
 import { useState, useEffect } from "react";
 import api from "../api";
-
-// interface Note {
-//   id: number;
-//   title: string;
-//   content: string;
-//   author: string;
-//   created_at: string;
-// }
+import Note from "../components/Note";
 
 export const Home = () => {
   const [notes, setNotes] = useState([]);
@@ -43,18 +37,25 @@ export const Home = () => {
 
   const createNote = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    api.post("/api/notes/", { title, content }).then((res) => {
-      if (res.status === 201) alert("Note created successfully")
-      else alert("Failed to create note");
-    })
-    .catch((error) => alert(error));
+    api
+      .post("/api/notes/", { title, content })
+      .then((res) => {
+        if (res.status === 201) alert("Note created successfully");
+        else alert("Failed to create note");
+      })
+      .catch((error) => alert(error));
     fetchNotes();
   };
 
   return (
     <div>
-      <div>
-        <h2>Notes</h2>
+      <div className="notes-section">
+        <h2>Your Notes</h2>
+        <div className="notes-wrapper">
+          {notes.map((note: NoteObjectProps) => (
+            <Note key={note.id} note={note} onDelete={deleteNote} />
+          ))}
+        </div>
       </div>
       <div className="form-wrapper">
         <h2>Create a Note</h2>
