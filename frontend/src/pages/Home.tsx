@@ -79,7 +79,7 @@ export const Home = () => {
             required
             onChange={(e) => setContent(e.target.value)}
           />
-          <button type="submit">Create</button>
+          <input type="submit" value="Create" />
         </form>
       </div>
     </div>

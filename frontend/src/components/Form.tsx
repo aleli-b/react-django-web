@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+import { LoadingIndicator } from "./LoadingIndicator";
 
 interface FormProps {
   route: string;
@@ -35,8 +36,6 @@ function Form({ route, method }: FormProps) {
 
   const title = method === "login" ? "Login" : "Register";
 
-  if (loading) return <div><p>Loading...</p></div>;
-
   return (
     <form onSubmit={handleSubmit} className="form-container">
       <h1>{title}</h1>
@@ -54,6 +53,7 @@ function Form({ route, method }: FormProps) {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
       />
+      {loading && <LoadingIndicator />}
       <button className="form-button" type="submit">
         Submit
       </button>
