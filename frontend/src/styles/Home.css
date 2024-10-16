@@ -2,6 +2,24 @@
 div {
   font-family: Arial, sans-serif;
 }
+
+.note-header {
+  display: flex;
+  width: 100%;
+}
+
+.user-wrapper, .date-wrapper {
+  border: 1px solid #ccc;
+}
+
+.user-wrapper {
+  width: 75%;
+}
+
+.date-wrapper {
+  width: 25%;
+}
+
 .notes-section {
   display: flex;
   flex-direction: column;

@@ -6,12 +6,24 @@ import Note from "../components/Note";
 
 export const Home = () => {
   const [notes, setNotes] = useState([]);
+  const [user, setUser] = useState("");
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
 
   useEffect(() => {
     fetchNotes();
+    fetchUser();
   }, []);
+
+  const fetchUser = async () => {
+    await api
+      .get("/api/user/me/")
+      .then((res) => res.data)
+      .then((data) => {
+        setUser(data.username);
+      })
+      .catch((error) => alert(error));
+  };
 
   const fetchNotes = async () => {
     await api
@@ -47,10 +59,17 @@ export const Home = () => {
     fetchNotes();
   };
 
+  const today = new Date();
+  const formattedDate = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+
   return (
     <div>
       <div className="notes-section">
-        <h2>Your Notes</h2>
+        <div className="note-header">
+          <div className="user-wrapper">WELCOME, {user}</div>
+          <div className="date-wrapper">DATE: {formattedDate}</div>
+        </div>
+        <h2>Notes</h2>
         <div className="notes-wrapper">
           {notes.map((note: NoteObjectProps) => (
             <Note key={note.id} note={note} onDelete={deleteNote} />
